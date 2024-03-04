@@ -24,6 +24,19 @@ func main() {
 		log.Println("VLAN created")
 	}
 
+	dev := vlan.Get("vlan1")
+	if dev == nil {
+		log.Fatal("VLAN device not found")
+	} else {
+		log.Printf("VLAN device: %#v\n", dev)
+	}
+
+	if err := vlan.SettleAddresses(dev.IfName); err != nil {
+		log.Fatal(err)
+	} else {
+		log.Println("VLAN addresses settled")
+	}
+
 	devices, err := vlan.List()
 	if err != nil {
 		log.Fatal(err)
